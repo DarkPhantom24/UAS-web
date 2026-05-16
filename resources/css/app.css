@@ -1,0 +1,218 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* ── E-Waste Hub Color Tokens ── */
+    --color-ewaste-50: #ecfdf5;
+    --color-ewaste-100: #d1fae5;
+    --color-ewaste-200: #a7f3d0;
+    --color-ewaste-300: #6ee7b7;
+    --color-ewaste-400: #34d399;
+    --color-ewaste-500: #10b981;
+    --color-ewaste-600: #059669;
+    --color-ewaste-700: #047857;
+    --color-ewaste-800: #065f46;
+    --color-ewaste-900: #064e3b;
+
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #334155;
+    --color-slate-800: #1e293b;
+    --color-slate-900: #0f172a;
+}
+
+/* ── Base Layer ── */
+@layer base {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-ewaste-300) transparent;
+    }
+
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ── Component Utilities ── */
+@layer components {
+    /* Glassmorphism card */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-card-dark {
+        background: rgba(30, 41, 59, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Glow effect */
+    .glow-emerald {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.15),
+                    0 0 60px rgba(16, 185, 129, 0.05);
+    }
+
+    .glow-emerald-strong {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.25),
+                    0 0 80px rgba(16, 185, 129, 0.1);
+    }
+
+    /* Input style */
+    .input-ewaste {
+        @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 text-sm
+               placeholder:text-slate-400
+               focus:outline-none focus:ring-2 focus:ring-ewaste-500/30 focus:border-ewaste-500
+               transition-all duration-200;
+    }
+
+    /* Button primary */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-ewaste-500 text-white font-semibold
+               rounded-lg text-sm cursor-pointer
+               hover:bg-ewaste-600 hover:shadow-lg hover:shadow-ewaste-500/25
+               active:scale-[0.98]
+               transition-all duration-200;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-slate-700 font-semibold
+               rounded-lg text-sm border border-slate-200 cursor-pointer
+               hover:bg-slate-50 hover:border-slate-300
+               active:scale-[0.98]
+               transition-all duration-200;
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-500 text-white font-semibold
+               rounded-lg text-sm cursor-pointer
+               hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/25
+               active:scale-[0.98]
+               transition-all duration-200;
+    }
+
+    /* Status badges */
+    .badge-success {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200;
+    }
+
+    .badge-warning {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 text-xs font-semibold rounded-full border border-amber-200;
+    }
+
+    .badge-danger {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-700 text-xs font-semibold rounded-full border border-red-200;
+    }
+
+    .badge-info {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-200;
+    }
+
+    /* Summary stat card */
+    .stat-card {
+        @apply relative overflow-hidden bg-white rounded-xl border border-slate-100 p-6
+               hover:shadow-lg hover:shadow-slate-200/50
+               transition-all duration-300;
+    }
+
+    /* Sidebar nav link */
+    .sidebar-link {
+        @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium
+               text-slate-500 hover:text-ewaste-700 hover:bg-ewaste-50
+               transition-all duration-200;
+    }
+
+    .sidebar-link-active {
+        @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium
+               text-ewaste-700 bg-ewaste-50 border border-ewaste-100;
+    }
+}
+
+/* ── Animations ── */
+@layer utilities {
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slide-in-left {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+        50% {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+    }
+
+    .animate-fade-in-up {
+        animation: fade-in-up 0.5s ease-out both;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.4s ease-out both;
+    }
+
+    .animate-slide-in-left {
+        animation: slide-in-left 0.4s ease-out both;
+    }
+
+    .animate-pulse-glow {
+        animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    .animate-float {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .animation-delay-100 { animation-delay: 0.1s; }
+    .animation-delay-200 { animation-delay: 0.2s; }
+    .animation-delay-300 { animation-delay: 0.3s; }
+    .animation-delay-400 { animation-delay: 0.4s; }
+    .animation-delay-500 { animation-delay: 0.5s; }
+}
