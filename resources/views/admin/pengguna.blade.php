@@ -13,37 +13,37 @@
                     <i class="ph ph-warning-circle text-amber-600 text-lg"></i>
                     <h3 class="font-bold text-amber-800">Mitra Menunggu Persetujuan ({{ $mitraPending->count() }})</h3>
                 </div>
-                {{-- AI Review Button --}}
-                <button id="btn-ai-review" onclick="runAiReview()"
+                {{-- Sistem Cerdas Review Button --}}
+                <button id="btn-smart-review" onclick="runSmartReview()"
                     class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                    style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
-                    <i class="ph ph-robot text-sm"></i>
-                    <span id="btn-ai-text">AI Auto-Review</span>
-                    <svg id="btn-ai-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    style="background: linear-gradient(135deg, #059669, #047857);">
+                    <i class="ph ph-brain text-sm"></i>
+                    <span id="btn-smart-text">Verifikasi Cerdas</span>
+                    <svg id="btn-smart-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                     </svg>
                 </button>
             </div>
 
-            {{-- AI Results Panel (hidden by default) --}}
-            <div id="ai-results-panel" class="hidden border-b border-amber-200">
-                <div class="px-5 py-4 bg-gradient-to-r from-violet-50 to-purple-50">
+            {{-- Smart Review Results Panel (hidden by default) --}}
+            <div id="smart-results-panel" class="hidden border-b border-amber-200">
+                <div class="px-5 py-4 bg-gradient-to-r from-emerald-50 to-teal-50">
                     <div class="flex items-center gap-2 mb-3">
-                        <i class="ph ph-robot text-violet-600 text-lg"></i>
-                        <h4 class="font-bold text-violet-800 text-sm">Hasil AI Review</h4>
-                        <span id="ai-summary" class="text-xs text-violet-600 ml-auto"></span>
+                        <i class="ph ph-brain text-emerald-600 text-lg"></i>
+                        <h4 class="font-bold text-emerald-800 text-sm">Hasil Verifikasi Sistem Cerdas</h4>
+                        <span id="smart-summary" class="text-xs text-emerald-600 ml-auto"></span>
                     </div>
-                    <div id="ai-results-list" class="space-y-2 max-h-64 overflow-y-auto"></div>
+                    <div id="smart-results-list" class="space-y-2 max-h-64 overflow-y-auto"></div>
                 </div>
             </div>
 
-            {{-- AI Error Panel (hidden by default) --}}
-            <div id="ai-error-panel" class="hidden border-b border-amber-200">
+            {{-- Error Panel (hidden by default) --}}
+            <div id="smart-error-panel" class="hidden border-b border-amber-200">
                 <div class="px-5 py-4 bg-red-50">
                     <div class="flex items-center gap-2">
                         <i class="ph ph-warning text-red-500 text-lg"></i>
-                        <p id="ai-error-msg" class="text-sm text-red-700"></p>
+                        <p id="smart-error-msg" class="text-sm text-red-700"></p>
                     </div>
                 </div>
             </div>
@@ -122,20 +122,20 @@
         </div>
     </div>
 
-    {{-- AI Review JavaScript --}}
+    {{-- Sistem Cerdas Review JavaScript --}}
     <script>
-        function runAiReview() {
-            const btn = document.getElementById('btn-ai-review');
-            const btnText = document.getElementById('btn-ai-text');
-            const spinner = document.getElementById('btn-ai-spinner');
-            const resultsPanel = document.getElementById('ai-results-panel');
-            const resultsList = document.getElementById('ai-results-list');
-            const errorPanel = document.getElementById('ai-error-panel');
-            const errorMsg = document.getElementById('ai-error-msg');
-            const summary = document.getElementById('ai-summary');
+        function runSmartReview() {
+            const btn = document.getElementById('btn-smart-review');
+            const btnText = document.getElementById('btn-smart-text');
+            const spinner = document.getElementById('btn-smart-spinner');
+            const resultsPanel = document.getElementById('smart-results-panel');
+            const resultsList = document.getElementById('smart-results-list');
+            const errorPanel = document.getElementById('smart-error-panel');
+            const errorMsg = document.getElementById('smart-error-msg');
+            const summary = document.getElementById('smart-summary');
 
             // Confirm action
-            if (!confirm('Jalankan AI Auto-Review untuk semua mitra pending?\n\nAI akan menganalisis nama mitra & lapak, lalu otomatis menyetujui atau menolak.')) {
+            if (!confirm('Jalankan Verifikasi Cerdas untuk semua mitra pending?\n\nSistem akan menganalisis nama lapak mitra menggunakan algoritma Expert System, lalu otomatis menyetujui atau menolak.')) {
                 return;
             }
 
@@ -143,13 +143,13 @@
             btn.disabled = true;
             btn.style.opacity = '0.7';
             btn.style.cursor = 'wait';
-            btnText.textContent = 'AI sedang menganalisis...';
+            btnText.textContent = 'Sedang menganalisis...';
             spinner.classList.remove('hidden');
             resultsPanel.classList.add('hidden');
             errorPanel.classList.add('hidden');
 
             // AJAX call
-            fetch('{{ route("admin.pengguna.ai-review") }}', {
+            fetch('{{ route("admin.pengguna.smart-review") }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -163,7 +163,7 @@
                 btn.disabled = false;
                 btn.style.opacity = '1';
                 btn.style.cursor = 'pointer';
-                btnText.textContent = 'AI Auto-Review';
+                btnText.textContent = 'Verifikasi Cerdas';
                 spinner.classList.add('hidden');
 
                 if (data.error) {
@@ -189,6 +189,7 @@
                         <div class="flex-1 min-w-0">
                             <p class="font-semibold ${isApproved ? 'text-green-800' : 'text-red-800'} truncate">${result.nama} <span class="font-normal text-xs opacity-70">· ${result.nama_lapak}</span></p>
                             <p class="text-xs ${isApproved ? 'text-green-600' : 'text-red-600'} mt-0.5">${result.alasan}</p>
+                            <p class="text-xs ${isApproved ? 'text-green-400' : 'text-red-400'} mt-0.5">Skor: ${result.skor}/100</p>
                         </div>
                         <span class="shrink-0 px-2 py-1 rounded-lg text-xs font-bold ${isApproved ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}">
                             ${isApproved ? 'APPROVED' : 'REJECTED'}
@@ -212,13 +213,13 @@
                 btn.disabled = false;
                 btn.style.opacity = '1';
                 btn.style.cursor = 'pointer';
-                btnText.textContent = 'AI Auto-Review';
+                btnText.textContent = 'Verifikasi Cerdas';
                 spinner.classList.add('hidden');
 
                 // Show error
                 errorPanel.classList.remove('hidden');
-                errorMsg.textContent = 'Gagal menghubungi server. Periksa koneksi internet.';
-                console.error('AI Review Error:', error);
+                errorMsg.textContent = 'Gagal menghubungi server. Periksa koneksi.';
+                console.error('Smart Review Error:', error);
             });
         }
     </script>

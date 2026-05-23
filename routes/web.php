@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/pengguna', [DashboardController::class, 'adminPengguna'])->name('admin.pengguna');
         Route::put('/admin/pengguna/{user}/approve', [DashboardController::class, 'adminApproveMitra'])->name('admin.pengguna.approve');
         Route::delete('/admin/pengguna/{user}/reject', [DashboardController::class, 'adminRejectMitra'])->name('admin.pengguna.reject');
-        Route::post('/admin/pengguna/ai-review', [DashboardController::class, 'adminAiReviewMitra'])->name('admin.pengguna.ai-review');
+        Route::post('/admin/pengguna/smart-review', [DashboardController::class, 'adminSmartReviewMitra'])->name('admin.pengguna.smart-review');
         Route::get('/admin/laporan', [DashboardController::class, 'adminLaporan'])->name('admin.laporan');
         Route::get('/admin/pengaturan', [DashboardController::class, 'adminPengaturan'])->name('admin.pengaturan');
         
