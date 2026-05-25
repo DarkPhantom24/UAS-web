@@ -48,19 +48,21 @@ class DashboardController extends Controller
         Gate::authorize('store-request');
 
         $validated = $request->validate([
-            'kategori' => 'required|string',
-            'berat' => 'required|numeric|min:0.1',
-            'alamat' => 'required|string',
-            'catatan' => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'kategori'    => 'required|string',
+            'berat'       => 'required|numeric|min:0.1',
+            'alamat'      => 'required|string',
+            'catatan'     => 'nullable|string',
         ]);
 
         EwasteRequest::create([
-            'user_id' => Auth::id(),
-            'kategori' => $validated['kategori'],
-            'berat' => $validated['berat'],
-            'alamat' => $validated['alamat'],
-            'catatan' => $validated['catatan'] ?? null,
-            'status' => 'menunggu',
+            'user_id'     => Auth::id(),
+            'category_id' => $validated['category_id'] ?? null,
+            'kategori'    => $validated['kategori'],
+            'berat'       => $validated['berat'],
+            'alamat'      => $validated['alamat'],
+            'catatan'     => $validated['catatan'] ?? null,
+            'status'      => 'menunggu',
         ]);
 
         return redirect()->route('user.dashboard')->with('success', 'Request berhasil dibuat!');
