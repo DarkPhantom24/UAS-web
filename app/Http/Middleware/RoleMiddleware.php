@@ -20,6 +20,11 @@ class RoleMiddleware
     {
         $user = Auth::user();
 
+        // Jika user belum login (null), arahkan ke halaman login
+        if (!$user) {
+            return redirect()->route('auth.login');
+        }
+
         // Jika role user tidak termasuk dalam daftar yang diizinkan
         if (!in_array($user->role, $roles)) {
             // Redirect ke dashboard sesuai role user yang sebenarnya
